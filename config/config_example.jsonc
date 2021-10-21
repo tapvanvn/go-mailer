@@ -1,0 +1,14 @@
+{
+    "Pubsub" : {
+        "Provider":"gpubsub",
+        "ConnectString":"newcontinent-platform:config/credential.json",
+        "Topic":"email"
+    },
+    "SMTP" : {
+        "Account": "example@gmail.com",
+        "Password": "password",
+        "Server": "smtp.gmail.com",
+        "Port": "465"
+    },
+    "ChannelCapability": 1000
+}
