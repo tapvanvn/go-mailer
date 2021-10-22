@@ -10,5 +10,6 @@
         "Server": "smtp.gmail.com",
         "Port": "465"
     },
-    "ChannelCapability": 1000
+    "ChannelCapability": 1000,
+    "NumTemplater": 10
 }

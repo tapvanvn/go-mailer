@@ -2,10 +2,13 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 
+	"github.com/tapvanvn/gomailer/email"
 	"github.com/tapvanvn/gomailer/entity"
 	"github.com/tapvanvn/gomailer/system"
 )
@@ -24,15 +27,19 @@ func onMessage(message string) {
 func process() {
 	for {
 		request := <-requestChannel
-		_ = request
-		err := system.EmailServer.SendEmail(system.Config.SMTP.Account, request.EmailAddress, "test email", "test email content")
-		if err != nil {
-			log.Println(err)
-		}
+		go email.Send(request)
 	}
 }
 
 func main() {
+	rootPath, _ := filepath.Abs(filepath.Dir(os.Args[0]))
+	workDir, err := os.Getwd()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		rootPath = workDir
+	}
+
 	configPath := ""
 	if len(os.Args) == 2 {
 		configPath = strings.TrimSpace(os.Args[1])
@@ -41,7 +48,7 @@ func main() {
 		log.Fatal("configPath is empty")
 	}
 
-	chn, err := system.Init(configPath, onMessage)
+	chn, err := system.Init(rootPath, configPath, onMessage)
 	if err != nil {
 		log.Fatal(err)
 	}

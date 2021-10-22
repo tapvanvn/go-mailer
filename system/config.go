@@ -11,15 +11,17 @@ import (
 	"github.com/tapvanvn/gopubsubengine"
 	"github.com/tapvanvn/gopubsubengine/gpubsub"
 	"github.com/tapvanvn/gopubsubengine/wspubsub"
+	"github.com/tapvanvn/gotemplater"
 	"github.com/tapvanvn/goutil"
 )
 
 var subscriber gopubsubengine.Subscriber = nil
+var HtmlRuntime = gotemplater.CreateHTMLRuntime()
 
 var EmailServer *goutil.SmtpServer = nil
 var Config *entity.Config = nil
 
-func Init(configPath string, processMessage func(string)) (chan *entity.SendRequest, error) {
+func Init(rootPath string, configPath string, processMessage func(string)) (chan *entity.SendRequest, error) {
 	file, err := os.Open(configPath)
 	if err != nil {
 		log.Fatal(err)
@@ -68,5 +70,14 @@ func Init(configPath string, processMessage func(string)) (chan *entity.SendRequ
 		return nil, errors.New("Create Email Server fail")
 	}
 
+	err = gotemplater.InitTemplater(Config.NumTemplater)
+	if err != nil {
+
+		return nil, err
+	}
+	err = gotemplater.Templater.AddNamespace("page", rootPath+"/template")
+	if err != nil {
+		log.Fatal(err)
+	}
 	return make(chan *entity.SendRequest, Config.ChannelCapability), nil
 }

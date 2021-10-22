@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/tapvanvn/gomailer/system"
 )
@@ -15,8 +16,16 @@ func main() {
 		fmt.Println("test.sh <configPath>")
 		os.Exit(1)
 	}
+	rootPath, _ := filepath.Abs(filepath.Dir(os.Args[0]))
+	workDir, err := os.Getwd()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		rootPath = workDir
+	}
+
 	configPath = os.Args[1]
-	_, err := system.Init(configPath, nil)
+	_, err = system.Init(rootPath+"/../..", configPath, nil)
 	if err != nil {
 		log.Fatal(err)
 	}

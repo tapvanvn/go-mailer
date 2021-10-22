@@ -15,4 +15,5 @@ type Config struct {
 	Pubsub            *PubsubConfig `json:"Pubsub"`
 	SMTP              *SMTPConfig   `json:"SMTP"`
 	ChannelCapability int           `json:"ChannelCapability"`
+	NumTemplater      int           `json:"NumTemplater"`
 }
