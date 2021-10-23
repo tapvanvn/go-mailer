@@ -1,8 +1,14 @@
 {
+    "HealthStatus":{
+        "HTTP":true,
+        "HTTPPort":8080
+    },
     "Pubsub" : {
         "Provider":"gpubsub",
         "ConnectString":"newcontinent-platform:config/credential.json",
-        "Topic":"email"
+        "Topic":"email",
+        "Response":true,
+        "ResponseTopic": "email_res"
     },
     "SMTP" : {
         "Account": "example@gmail.com",

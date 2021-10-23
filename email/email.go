@@ -2,7 +2,6 @@ package email
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/tapvanvn/gomailer/entity"
 	"github.com/tapvanvn/gomailer/system"
@@ -10,7 +9,7 @@ import (
 	"github.com/tapvanvn/gotemplater"
 )
 
-func Send(request *entity.SendRequest) {
+func Send(request *entity.SendRequest) error {
 
 	renderContext := gosmartstring.CreateContext(system.HtmlRuntime)
 
@@ -22,12 +21,12 @@ func Send(request *entity.SendRequest) {
 	content, err := gotemplater.Templater.Render(fmt.Sprintf("page:%s", request.Template), renderContext)
 	if err != nil {
 
-		log.Println(err)
-		return
+		return err
 	}
 	err = system.EmailServer.SendEmail(system.Config.SMTP.Account, request.EmailAddress, request.Title, content)
 	if err != nil {
-		log.Println(err)
-		return
+
+		return err
 	}
+	return nil
 }
