@@ -168,6 +168,8 @@ github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+
 github.com/stretchr/testify v1.4.0/go.mod h1:j7eGeouHqKxXV5pUuKE4zz7dFj8WfuZ+81PSLYec5m4=
 github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5cxcmMvtA=
 github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
+github.com/tapvanvn/gomailer v0.0.1-build.1 h1:i6MtBNbVV9AT/sw0pVDhFBfh340LGjRp8DOrBM0N7sI=
+github.com/tapvanvn/gomailer v0.0.1-build.1/go.mod h1:0LWzPEodGBmtWVoH0UCgRXGjWOd5Fj+2SNwuavenm14=
 github.com/tapvanvn/gopubsubengine v0.0.23 h1:BSCCzeQCN+nTLMg4fKD2DyWxJr4YJLxzuCwyxtDLINQ=
 github.com/tapvanvn/gopubsubengine v0.0.23/go.mod h1:WKAeHVwOppn48FSdt/qNOmcjgBi5h7fCoJAAT1eaFCs=
 github.com/tapvanvn/gosmartstring v0.0.2 h1:rqrNhOfn6JE02fErgq7Xc9sqTUs0tlhAUQidIwiCeBU=

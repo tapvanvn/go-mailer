@@ -3,8 +3,8 @@ package email
 import (
 	"fmt"
 
-	"github.com/tapvanvn/gomailer/entity"
-	"github.com/tapvanvn/gomailer/system"
+	"github.com/tapvanvn/go-mailer/entity"
+	"github.com/tapvanvn/go-mailer/system"
 	"github.com/tapvanvn/gosmartstring"
 	"github.com/tapvanvn/gotemplater"
 )

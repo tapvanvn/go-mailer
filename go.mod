@@ -1,8 +1,9 @@
-module github.com/tapvanvn/gomailer
+module github.com/tapvanvn/go-mailer
 
 go 1.17
 
 require (
+
 	github.com/tapvanvn/gopubsubengine v0.0.23
 	github.com/tapvanvn/gosmartstring v0.0.2
 	github.com/tapvanvn/gotemplater v0.0.8-build.1

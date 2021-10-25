@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/tapvanvn/gomailer/system"
+	"github.com/tapvanvn/go-mailer/system"
 )
 
 var configPath string = ""

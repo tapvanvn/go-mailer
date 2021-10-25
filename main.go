@@ -9,9 +9,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/tapvanvn/gomailer/email"
-	"github.com/tapvanvn/gomailer/entity"
-	"github.com/tapvanvn/gomailer/system"
+	"github.com/tapvanvn/go-mailer/email"
+	"github.com/tapvanvn/go-mailer/entity"
+	"github.com/tapvanvn/go-mailer/system"
 )
 
 var requestChannel chan *entity.SendRequest = nil

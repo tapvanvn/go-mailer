@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/tapvanvn/gomailer/entity"
+	"github.com/tapvanvn/go-mailer/entity"
 	"github.com/tapvanvn/gopubsubengine"
 	"github.com/tapvanvn/gopubsubengine/gpubsub"
 	"github.com/tapvanvn/gopubsubengine/wspubsub"
