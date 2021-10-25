@@ -17,12 +17,14 @@ import (
 var requestChannel chan *entity.SendRequest = nil
 
 func onMessage(message string) {
+	//fmt.Println(message)
 	request := &entity.SendRequest{}
 	err := json.Unmarshal([]byte(message), request)
 	if err != nil {
 		log.Println(err)
 		return
 	}
+	requestChannel <- request
 }
 
 func send(request *entity.SendRequest) {
