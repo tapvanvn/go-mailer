@@ -7,9 +7,14 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"strings"
 
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/tapvanvn/go-mailer/entity"
 	"github.com/tapvanvn/gopubsubengine"
+	"github.com/tapvanvn/gopubsubengine/awssqs"
 	"github.com/tapvanvn/gopubsubengine/gpubsub"
 	"github.com/tapvanvn/gopubsubengine/wspubsub"
 	"github.com/tapvanvn/gotemplater"
@@ -23,6 +28,9 @@ var HtmlRuntime = gotemplater.CreateHTMLRuntime()
 
 var EmailServer *goutil.SmtpServer = nil
 var Config *entity.Config = nil
+
+var ErrBadConnectionString = errors.New("Bad Connectionstring")
+var ErrEstablishConnection = errors.New("Cannot Establish connection")
 
 func Init(rootPath string, configPath string, processMessage func(string)) (chan *entity.SendRequest, error) {
 	file, err := os.Open(configPath)
@@ -45,6 +53,9 @@ func Init(rootPath string, configPath string, processMessage func(string)) (chan
 
 		fmt.Printf("pubsub connect string:%s\n", Config.Pubsub.ConnectString)
 
+		topic := Config.Pubsub.Topic
+		resTopic := Config.Pubsub.ResponseTopic
+
 		if Config.Pubsub.Provider == "wspubsub" {
 			newHub, err := wspubsub.NewWSPubSubHub(Config.Pubsub.ConnectString)
 			if err != nil {
@@ -57,21 +68,54 @@ func Init(rootPath string, configPath string, processMessage func(string)) (chan
 				return nil, err
 			}
 			hub = newHub
+		} else if Config.Pubsub.Provider == "awssqs" {
+			parts := strings.Split(Config.Pubsub.ConnectString, ":")
+			if len(parts) != 3 {
+				return nil, ErrBadConnectionString
+			}
+			sessionConfig := &aws.Config{
+				Region:      aws.String(parts[0]),
+				Credentials: credentials.NewStaticCredentials(parts[1], parts[2], ""),
+			}
+
+			sess, err := session.NewSession(sessionConfig)
+			if err != nil {
+				return nil, ErrEstablishConnection
+			}
+			newHub, err := awssqs.NewAWSSQSHubFromSession(sess)
+			if err != nil {
+				return nil, err
+			}
+			topicParts := strings.Split(Config.Pubsub.Topic, "@")
+			if len(topicParts) != 2 {
+				return nil, ErrBadConnectionString
+			}
+			topic = topicParts[0]
+			newHub.SetTopicQueueURL(topicParts[0], topicParts[1])
+			if len(Config.Pubsub.ResponseTopic) > 0 {
+				topicParts = strings.Split(Config.Pubsub.ResponseTopic, "@")
+				if len(topicParts) != 2 {
+					return nil, ErrBadConnectionString
+				}
+				newHub.SetTopicQueueURL(topicParts[0], topicParts[1])
+				resTopic = topicParts[0]
+			}
+			hub = newHub
 		}
 		if hub == nil {
 			return nil, errors.New("Config error")
 		}
-		sub, err := hub.SubscribeOn(Config.Pubsub.Topic)
+		sub, err := hub.SubscribeOn(topic)
 		if err != nil {
 			return nil, err
 		}
 		subscriber = sub
 		subscriber.SetProcessor(processMessage)
 		if Config.Pubsub.Response {
-			if len(Config.Pubsub.ResponseTopic) == 0 {
+			if len(resTopic) == 0 {
 				return nil, errors.New("ReponseTopic cannot be empty")
 			}
-			pub, err := hub.PublishOn(Config.Pubsub.ResponseTopic)
+			pub, err := hub.PublishOn(resTopic)
 			if err != nil {
 				return nil, err
 			}

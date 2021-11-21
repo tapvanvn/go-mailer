@@ -10,6 +10,14 @@
         "Response":true,
         "ResponseTopic": "email_res"
     },
+    /*
+    "Pubsub" : {
+        "Provider":"awssqs",
+        "ConnectString":"zone:key:secret",
+        "Topic":"email@url",
+        "Response":true,
+        "ResponseTopic": "email_res@url"
+    },*/
     "SMTP" : {
         "Account": "example@gmail.com",
         "Password": "password",

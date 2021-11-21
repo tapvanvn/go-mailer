@@ -3,8 +3,8 @@ module github.com/tapvanvn/go-mailer
 go 1.17
 
 require (
-
-	github.com/tapvanvn/gopubsubengine v0.0.23
+	github.com/aws/aws-sdk-go v1.42.9
+	github.com/tapvanvn/gopubsubengine v0.0.24
 	github.com/tapvanvn/gosmartstring v0.0.2
 	github.com/tapvanvn/gotemplater v0.0.8-build.1
 	github.com/tapvanvn/goutil v0.0.18-build.1
@@ -19,11 +19,12 @@ require (
 	github.com/google/uuid v1.2.0 // indirect
 	github.com/googleapis/gax-go/v2 v2.0.5 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
+	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/tapvanvn/gotokenize v1.0.5 // indirect
 	github.com/tapvanvn/goworker v1.1.1 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
-	golang.org/x/net v0.0.0-20210503060351-7fd8e65b6420 // indirect
+	golang.org/x/net v0.0.0-20210614182718-04defd469f4e // indirect
 	golang.org/x/oauth2 v0.0.0-20210805134026-6f1e6394065a // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
 	golang.org/x/sys v0.0.0-20210806184541-e5e7981a1069 // indirect
