@@ -14,6 +14,8 @@ RUN cd /src && go get ./... && go build -o mailer
 #FINAL
 FROM golang:1.16-alpine
 
+WORKDIR /
+
 ARG version # you could give this a default value as well
 
 RUN apk update \
@@ -24,6 +26,6 @@ RUN apk update \
         
 COPY --from=build               /src/mailer        / 
 
-ENV PORT=8080
+ENV PORT=80
 
 ENTRYPOINT ["/mailer"]

@@ -39,6 +39,6 @@ RUN apk update \
         
 COPY --from=build               /src/mailer        / 
 
-ENV PORT=8080
+ENV PORT=80
 
 ENTRYPOINT ["/mailer"]

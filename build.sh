@@ -7,14 +7,12 @@ if [ $arg_num -ne 1 ];then
     exit 1
 fi
 arch=$1
-pushd "$DIR/../"
 
-tag=$(<./version.txt)
+tag=$(<./version.txt)-${arch}
 
 server_url=tapvanvn
 
-docker build -t $server_url/${arch}_mailer:$tag  -f docker/$arch.dockerfile ./
+docker build -t $server_url/mailer:$tag  -f docker/$arch.dockerfile ./
 
-docker push $server_url/${arch}_mailer:$tag
+docker push $server_url/mailer:$tag
 
-popd

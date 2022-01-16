@@ -51,26 +51,27 @@ func Init(rootPath string, configPath string, processMessage func(string)) (chan
 	if Config.Pubsub != nil {
 		var hub gopubsubengine.Hub = nil
 
-		fmt.Printf("pubsub connect string:%s\n", Config.Pubsub.ConnectString)
+		fmt.Printf("pubsub connect string:%s\n", Config.Pubsub.ConnectionString)
 
 		topic := Config.Pubsub.Topic
 		resTopic := Config.Pubsub.ResponseTopic
 
 		if Config.Pubsub.Provider == "wspubsub" {
-			newHub, err := wspubsub.NewWSPubSubHub(Config.Pubsub.ConnectString)
+			newHub, err := wspubsub.NewWSPubSubHub(Config.Pubsub.ConnectionString)
 			if err != nil {
 				return nil, err
 			}
 			hub = newHub
 		} else if Config.Pubsub.Provider == "gpubsub" {
-			newHub, err := gpubsub.NewGPubSubHub(Config.Pubsub.ConnectString)
+			newHub, err := gpubsub.NewGPubSubHub(Config.Pubsub.ConnectionString)
 			if err != nil {
 				return nil, err
 			}
 			hub = newHub
 		} else if Config.Pubsub.Provider == "awssqs" {
-			parts := strings.Split(Config.Pubsub.ConnectString, ":")
+			parts := strings.Split(Config.Pubsub.ConnectionString, ":")
 			if len(parts) != 3 {
+
 				return nil, ErrBadConnectionString
 			}
 			sessionConfig := &aws.Config{
@@ -88,6 +89,7 @@ func Init(rootPath string, configPath string, processMessage func(string)) (chan
 			}
 			topicParts := strings.Split(Config.Pubsub.Topic, "@")
 			if len(topicParts) != 2 {
+
 				return nil, ErrBadConnectionString
 			}
 			topic = topicParts[0]
@@ -95,6 +97,7 @@ func Init(rootPath string, configPath string, processMessage func(string)) (chan
 			if len(Config.Pubsub.ResponseTopic) > 0 {
 				topicParts = strings.Split(Config.Pubsub.ResponseTopic, "@")
 				if len(topicParts) != 2 {
+
 					return nil, ErrBadConnectionString
 				}
 				newHub.SetTopicQueueURL(topicParts[0], topicParts[1])

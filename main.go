@@ -88,7 +88,7 @@ func main() {
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte("i am ok"))
 		})
-		port := 8080
+		port := 80
 		if system.Config.HealthStatus.HTTPPort > 0 {
 			port = system.Config.HealthStatus.HTTPPort
 		}

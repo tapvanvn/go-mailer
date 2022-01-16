@@ -5,11 +5,11 @@ type HealthConfig struct {
 	HTTPPort int  `json:"HTTPPort"`
 }
 type PubsubConfig struct {
-	Provider      string `json:"Provider"`
-	ConnectString string `json:"ConnectString"`
-	Topic         string `json:"Topic"`
-	Response      bool   `json:"Response"`
-	ResponseTopic string `json:"ResponseTopic"`
+	Provider         string `json:"Provider"`
+	ConnectionString string `json:"ConnectionString"`
+	Topic            string `json:"Topic"`
+	Response         bool   `json:"Response"`
+	ResponseTopic    string `json:"ResponseTopic"`
 }
 
 type SMTPConfig struct {

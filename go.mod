@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/aws/aws-sdk-go v1.42.9
-	github.com/tapvanvn/gopubsubengine v0.0.25
+	github.com/tapvanvn/gopubsubengine v0.0.26
 	github.com/tapvanvn/gosmartstring v0.0.2
 	github.com/tapvanvn/gotemplater v0.0.8-build.1
 	github.com/tapvanvn/goutil v0.0.18-build.1
